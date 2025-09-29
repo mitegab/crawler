@@ -1,0 +1,36 @@
+{
+  "sources": [
+    {
+      "name": "TechCrunch",
+      "url": "https://techcrunch.com/",
+      "enabled": true,
+      "scraper_class": "TechCrunchScraper",
+      "category": "Technology",
+      "language": "en"
+    },
+    {
+      "name": "The Verge",
+      "url": "https://www.theverge.com/",
+      "enabled": true,
+      "scraper_class": "TheVergeScraper",
+      "category": "Technology",
+      "language": "en"
+    },
+    {
+      "name": "Ars Technica",
+      "url": "https://arstechnica.com/",
+      "enabled": true,
+      "scraper_class": "ArsTechnicaScraper",
+      "category": "Technology",
+      "language": "en"
+    },
+    {
+      "name": "Wired",
+      "url": "https://www.wired.com/",
+      "enabled": true,
+      "scraper_class": "WiredScraper",
+      "category": "Technology",
+      "language": "en"
+    }
+  ]
+}

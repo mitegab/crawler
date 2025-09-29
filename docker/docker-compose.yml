@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  crawler:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: tech-news-crawler
+    env_file:
+      - ../.env
+    volumes:
+      - ../backend:/app
+      - ../logs:/app/logs
+      - ../output:/app/output
+    restart: unless-stopped
+    command: python main.py
+
+# Future services can be added here:
+# - frontend (Next.js)
+# - nginx (reverse proxy)
+# - redis (caching)
