@@ -4,11 +4,11 @@ Orchestrates scraping, translation, and storage of articles
 """
 
 from typing import List, Dict
-from ..scrapers.techcrunch import TechCrunchScraper
-from ..scrapers.theverge import TheVergeScraper
-from ..scrapers.arstechnica import ArsTechnicaScraper
-from ..scrapers.wired import WiredScraper
-from ..translators.translator import Translator
+from scrapers.techcrunch import TechCrunchScraper
+from scrapers.theverge import TheVergeScraper
+from scrapers.arstechnica import ArsTechnicaScraper
+from scrapers.wired import WiredScraper
+from translators.translator import Translator
 
 
 class ArticleProcessor:

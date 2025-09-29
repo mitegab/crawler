@@ -1,4 +1,14 @@
-# Tech News Crawler & Amharic Translation Platform
+# Tech News Crawler & Amharic Translation ## 📚 Documentation
+
+**Backend Setup:**
+- 🚀 **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- 📘 **[Appwrite Setup Guide](docs/APPWRITE_SETUP.md)** - Complete step-by-step Appwrite configuration
+- ⚡ **[Appwrite Functions Guide](docs/APPWRITE_FUNCTIONS.md)** - Serverless functions deployment
+- 📋 **[Quick Reference](docs/APPWRITE_QUICK_REFERENCE.md)** - Checklists and visual guides
+
+**Frontend Setup:**
+- 🎨 **[Vue.js Frontend Setup](docs/VUE_FRONTEND_SETUP.md)** - Build the public website with Vue.js
+- 🌐 **[Web Platform Configuration](docs/APPWRITE_SETUP.md#step-24-add-web-platform-optional---for-future-frontend)** - Configure Appwrite for frontendrm
 
 A comprehensive web application that crawls tech news from popular channels, translates content to Amharic, and publishes it on a website.
 

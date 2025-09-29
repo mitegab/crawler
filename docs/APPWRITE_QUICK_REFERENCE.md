@@ -13,10 +13,36 @@ Visual guide and checklists for setting up Appwrite Cloud.
 ☐ Create new project: "Tech News Crawler"
 ☐ Note Project ID: ___________________________
 ☐ Note Endpoint: https://cloud.appwrite.io/v1
-☐ (Optional) Add Web Platform if building frontend later:
-    Platform Type: React/Next.js/Vue/Svelte/etc
-    Hostname: localhost (dev) or yourdomain.com (prod)
-    ⚠️  Skip this for backend-only setup
+
+☐ (Optional) Add Web Platform for Frontend:
+    ⚠️  BACKEND-ONLY (Python Crawler): Skip this step entirely
+    
+    🌐 FOR VUE.JS FRONTEND:
+    ☐ Go to Settings → Platforms → Add platform
+    ☐ Select: Web → Vue
+    ☐ Enter Hostname: localhost (exactly, no port!)
+        ✅ Correct: localhost
+        ❌ Wrong: http://localhost:5173
+        ❌ Wrong: localhost:5173
+    
+    ☐ Clone Vue starter (optional):
+        git clone https://github.com/appwrite/starter-for-vue
+        cd starter-for-vue
+        
+    ☐ Configure .env:
+        VITE_APPWRITE_PROJECT_ID = "YOUR_PROJECT_ID"
+        VITE_APPWRITE_PROJECT_NAME = "crawler"
+        VITE_APPWRITE_ENDPOINT = "https://cloud.appwrite.io/v1"
+        
+    ☐ Install & run:
+        npm install
+        npm run dev
+        
+    ☐ Test connection:
+        Open http://localhost:5173
+        Click "Send a ping" button
+        
+    📖 Full guide: docs/VUE_FRONTEND_SETUP.md
 ```
 
 ### Phase 2: Database Setup (15 minutes)

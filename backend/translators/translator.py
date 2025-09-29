@@ -5,7 +5,14 @@ Handles translation of articles from English to Amharic
 
 import os
 from typing import Optional, Dict
-from googletrans import Translator as GoogleTranslator
+
+# Make googletrans optional for Python 3.13+ compatibility
+try:
+    from googletrans import Translator as GoogleTranslator
+    GOOGLETRANS_AVAILABLE = True
+except (ImportError, ModuleNotFoundError):
+    GOOGLETRANS_AVAILABLE = False
+    GoogleTranslator = None
 
 
 class Translator:
@@ -26,7 +33,11 @@ class Translator:
         self.target_lang = 'am'  # Amharic
         
         if service == 'google':
-            self.translator = GoogleTranslator()
+            if GOOGLETRANS_AVAILABLE:
+                self.translator = GoogleTranslator()
+            else:
+                print("Warning: googletrans not available (Python 3.13+ compatibility issue). Translation disabled.")
+                self.translator = None
         elif service == 'azure':
             # Azure Translator setup (requires azure-ai-translation-text package)
             self.azure_key = os.getenv('AZURE_TRANSLATOR_KEY')
@@ -64,6 +75,9 @@ class Translator:
     
     def _translate_google(self, text: str) -> Optional[str]:
         """Translate using Google Translate API."""
+        if not self.translator:
+            return None
+            
         # Split long text into chunks (Google has character limits)
         max_length = 5000
         if len(text) > max_length:
