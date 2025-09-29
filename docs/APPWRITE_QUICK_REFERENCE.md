@@ -13,6 +13,10 @@ Visual guide and checklists for setting up Appwrite Cloud.
 ☐ Create new project: "Tech News Crawler"
 ☐ Note Project ID: ___________________________
 ☐ Note Endpoint: https://cloud.appwrite.io/v1
+☐ (Optional) Add Web Platform if building frontend later:
+    Platform Type: React/Next.js/Vue/Svelte/etc
+    Hostname: localhost (dev) or yourdomain.com (prod)
+    ⚠️  Skip this for backend-only setup
 ```
 
 ### Phase 2: Database Setup (15 minutes)

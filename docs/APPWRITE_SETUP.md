@@ -62,6 +62,54 @@ Endpoint: https://cloud.appwrite.io/v1
    - **Logo**: (optional) Upload a logo
 3. Note the **API Endpoint**: `https://cloud.appwrite.io/v1`
 
+### Step 2.4: Add Web Platform (Optional - For Future Frontend)
+
+⚠️ **Note**: This step is **OPTIONAL** for the backend crawler. Only configure this if you plan to build a web frontend later.
+
+1. Go to **Settings** → **Platforms**
+2. Click **"Add Platform"** → **"Web App"**
+3. Configure based on your frontend choice:
+
+#### For Backend-Only (Current Setup):
+**You can SKIP this step entirely** - the Python backend uses API keys, not web platform authentication.
+
+#### For Future Frontend Setup:
+
+| Frontend Type | What to Select | Hostname to Enter |
+|--------------|----------------|-------------------|
+| **Next.js** | Select "Next.js" | `localhost` (for development)<br>`yourdomain.com` (for production) |
+| **React** | Select "React" | `localhost` or `localhost:3000` |
+| **Vue** | Select "Vue" | `localhost:5173` (Vite default) |
+| **Svelte** | Select "Svelte" | `localhost:5173` |
+| **Angular** | Select "Angular" | `localhost:4200` |
+| **Nuxt** | Select "Nuxt" | `localhost:3000` |
+| **JavaScript** | Select "JavaScript" | `localhost` or your dev server port |
+
+**Hostname Examples:**
+- **Development**: `localhost`, `localhost:3000`, `127.0.0.1:8080`
+- **Production**: `mynewssite.com`, `www.technews.et`, `*.vercel.app`
+- **Wildcards**: `*.yourdomain.com` (allows all subdomains)
+
+**What Each Field Means:**
+- **Type**: The framework/library you'll use for the frontend
+- **Hostname**: 
+  - Domain or IP where your frontend will run
+  - Used for CORS (Cross-Origin Resource Sharing) security
+  - Appwrite will only allow requests from these domains
+  - You can add multiple platforms for different environments (dev, staging, prod)
+
+**Example Configuration:**
+```
+Name: Tech News Frontend (Dev)
+Type: React
+Hostname: localhost:3000
+```
+
+**💡 Pro Tip**: You can add multiple platforms:
+- One for local development (`localhost`)
+- One for staging (`staging.yourdomain.com`)
+- One for production (`www.yourdomain.com`)
+
 ---
 
 ## 3. Database Setup
@@ -755,6 +803,59 @@ Monitor your crawler from Appwrite Console:
 - Verify translation service credentials
 - Check queue collection permissions
 - Review function logs
+
+### Frequently Asked Questions (FAQ)
+
+#### Q: Do I need to add a Web Platform for the backend crawler?
+**A: No!** The Python backend uses API keys for authentication, not web platform settings. 
+
+- **Web Platform** = For browser-based frontends (React, Vue, etc.)
+- **API Keys** = For backend services (Python, Node.js servers, etc.)
+
+Only add a Web Platform if you're building a website frontend later.
+
+#### Q: What should I enter in the "Hostname" field?
+**A: It depends on your use case:**
+
+| Use Case | Hostname Example |
+|----------|-----------------|
+| Local React dev server | `localhost:3000` |
+| Local Vue/Vite dev | `localhost:5173` |
+| Production website | `www.yourdomain.com` |
+| Any subdomain | `*.yourdomain.com` |
+| Backend-only (our case) | **Skip this step entirely** |
+
+#### Q: Which platform type should I choose?
+**A: Choose based on your frontend framework:**
+
+- Building a React app? → Select **React**
+- Using Next.js? → Select **Next.js**
+- Using Vue? → Select **Vue**
+- Using Svelte? → Select **Svelte**
+- Plain HTML/JS? → Select **JavaScript**
+- **Backend only?** → **Don't add any platform**
+
+#### Q: Can I add multiple platforms?
+**A: Yes!** You can add separate platforms for:
+- Development (`localhost:3000`)
+- Staging (`staging.yourdomain.com`)
+- Production (`www.yourdomain.com`)
+- Mobile app (separate platform type)
+
+#### Q: What if I enter the wrong hostname?
+**A: You'll get CORS errors!** 
+- Symptoms: "Access blocked by CORS policy" in browser console
+- Fix: Go to Settings → Platforms → Edit the platform → Update hostname
+
+#### Q: Do I need different projects for dev and production?
+**A: Not required, but recommended for large projects:**
+
+| Approach | When to Use |
+|----------|------------|
+| **One project, multiple platforms** | Small projects, learning |
+| **Separate projects** | Production apps, team projects |
+
+For this crawler: **One project is fine** - just use different API keys if needed.
 
 ### Get Help
 - **Documentation**: https://appwrite.io/docs
