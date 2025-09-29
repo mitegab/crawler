@@ -45,7 +45,7 @@ class AppwriteManager:
         self.articles_collection_id = os.getenv('APPWRITE_ARTICLES_COLLECTION_ID', 'articles')
         self.storage_bucket_id = os.getenv('APPWRITE_STORAGE_BUCKET_ID', 'article-images')
     
-    def save_article(self, article: Dict) -> Optional[str]:
+    def save_article(self, article: Dict) -> Optional[Dict]:
         """
         Save an article to the database.
         
@@ -53,24 +53,21 @@ class AppwriteManager:
             article: Article dictionary with all fields
             
         Returns:
-            Document ID if successful, None otherwise
+            Document dict if successful, None otherwise
         """
         try:
-            # Prepare document data
+            # Prepare document data matching the database schema
+            # Schema: title, title_am, url, summary, summary_am, source, image_url, published_date, category
             document_data = {
-                'title_en': article.get('title', ''),
+                'title': article.get('title', ''),
                 'title_am': article.get('title_am', ''),
-                'content_en': article.get('content', ''),
-                'content_am': article.get('content_am', ''),
+                'url': article.get('url', article.get('source_url', '')),
+                'summary': article.get('summary', article.get('content', '')[:500] if article.get('content') else ''),
+                'summary_am': article.get('summary_am', ''),
                 'source': article.get('source', ''),
-                'source_url': article.get('source_url', ''),
-                'author': article.get('author', ''),
+                'image_url': article.get('image_url', article.get('featured_image', '')),
                 'published_date': article.get('published_date', ''),
-                'scraped_at': article.get('scraped_at', ''),
                 'category': article.get('category', 'Technology'),
-                'tags': article.get('tags', []),
-                'featured_image': article.get('featured_image', ''),
-                'status': 'published' if article.get('content_am') else 'scraped',
             }
             
             # Create document
@@ -81,7 +78,7 @@ class AppwriteManager:
                 data=document_data
             )
             
-            return result['$id']
+            return result
         
         except AppwriteException as e:
             print(f"Appwrite error saving article: {e.message}")
