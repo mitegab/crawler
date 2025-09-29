@@ -40,13 +40,20 @@ crawler/
 - **Anti-Bot**: Zyte API (optional)
 - **Frontend**: Next.js, React, TypeScript (to be implemented)
 
-## 📦 Installation
+## � Documentation
+
+- **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[Appwrite Setup Guide](docs/APPWRITE_SETUP.md)** - Complete step-by-step Appwrite configuration
+- **[Appwrite Functions Guide](docs/APPWRITE_FUNCTIONS.md)** - Serverless functions deployment
+- **[Quick Reference](docs/APPWRITE_QUICK_REFERENCE.md)** - Checklists and visual guides
+
+## �📦 Installation
 
 ### Prerequisites
 
 - Python 3.9 or higher
 - pip (Python package manager)
-- Appwrite account (free tier available)
+- Appwrite Cloud account (free tier available - [Sign up here](https://cloud.appwrite.io))
 - Optional: Zyte API account for advanced scraping
 
 ### Backend Setup
@@ -76,24 +83,28 @@ crawler/
    ```
 
 5. **Set up Appwrite**
-   - Create an Appwrite project at https://cloud.appwrite.io
-   - Create a database named `tech-news-db`
-   - Create a collection named `articles` with the following attributes:
-     - title_en (string, 500)
-     - title_am (string, 500)
-     - content_en (text, 65535)
-     - content_am (text, 65535)
-     - source (string, 100)
-     - source_url (string, 500)
-     - author (string, 200)
-     - published_date (string, 50)
-     - scraped_at (string, 50)
-     - category (string, 100)
-     - tags (array)
-     - featured_image (string, 500)
-     - status (string, 50)
-   - Create a storage bucket named `article-images`
-   - Generate an API key and add to `.env`
+   
+   See the **[Complete Appwrite Setup Guide](docs/APPWRITE_SETUP.md)** for detailed instructions.
+   
+   **Quick Setup:**
+   - Create Appwrite account at https://cloud.appwrite.io
+   - Follow **[APPWRITE_SETUP.md](docs/APPWRITE_SETUP.md)** for:
+     - Database creation (3 collections)
+     - Storage bucket setup
+     - API key generation
+     - Serverless functions deployment
+   
+   **Or use the quick test:**
+   ```bash
+   cd backend
+   python test_appwrite.py  # Tests your Appwrite configuration
+   ```
+
+6. **Seed News Sources**
+   ```bash
+   cd backend
+   python seed_sources.py --seed  # Adds initial news sources to database
+   ```
 
 ## 🚀 Usage
 
@@ -109,6 +120,24 @@ This will:
 2. Translate content to Amharic
 3. Save to Appwrite database (if configured)
 4. Save output to `output/articles.json`
+
+### Managing News Sources
+
+```bash
+cd backend
+
+# List all sources
+python seed_sources.py --list
+
+# Enable a source
+python seed_sources.py --enable "TechRadar"
+
+# Disable a source
+python seed_sources.py --disable "Wired"
+
+# Re-seed sources
+python seed_sources.py --seed
+```
 
 ### Configuration
 
