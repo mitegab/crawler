@@ -84,23 +84,47 @@ class BaseScraper(ABC):
     
     def _fetch_with_zyte(self, url: str) -> Optional[str]:
         """Fetch page using Zyte API for anti-bot protection."""
+        # Zyte API endpoint (using Zyte API, not legacy Crawlera)
         api_url = "https://api.zyte.com/v1/extract"
         
         payload = {
             "url": url,
-            "browserHtml": True,
+            "httpResponseBody": True,  # Get the HTML content
+            "browserHtml": True,       # Use browser rendering
         }
         
-        response = requests.post(
-            api_url,
-            auth=(self.zyte_api_key, ''),
-            json=payload,
-            timeout=60
-        )
-        response.raise_for_status()
-        
-        data = response.json()
-        return data.get('browserHtml', '')
+        try:
+            response = requests.post(
+                api_url,
+                auth=(self.zyte_api_key, ''),  # API key as username, empty password
+                json=payload,
+                timeout=60
+            )
+            
+            # Check for errors
+            if response.status_code == 401:
+                print(f"Zyte API authentication failed. Please check your API key.")
+                print(f"Falling back to direct requests...")
+                return self._fetch_direct(url)
+            
+            response.raise_for_status()
+            
+            data = response.json()
+            
+            # Try to get browserHtml first, then fall back to httpResponseBody
+            html = data.get('browserHtml') or data.get('httpResponseBody')
+            
+            if html:
+                print(f"✓ Successfully fetched via Zyte API")
+                return html
+            else:
+                print(f"⚠ Zyte API returned no content, falling back to direct requests")
+                return self._fetch_direct(url)
+                
+        except Exception as e:
+            print(f"Zyte API error: {str(e)}")
+            print(f"Falling back to direct requests...")
+            return self._fetch_direct(url)
     
     @abstractmethod
     def extract_article_links(self, html: str) -> List[str]:
