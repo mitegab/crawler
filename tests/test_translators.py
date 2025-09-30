@@ -15,17 +15,19 @@ def test_translator_initialization():
 
 
 def test_text_splitting():
-    """Test text splitting for long content."""
+   """Test text splitting for long content."""
     translator = Translator()
-    
+
     # Create a long text
     long_text = "This is a sentence. " * 500
-    
-    # Split text
-    chunks = translator._split_text(long_text, max_length=1000)
-    
+
+    # Use the public method instead of a private one
+    chunks = translator.split_text(long_text, max_length=1000)
+
+    # Assertions
     assert len(chunks) > 1
     assert all(len(chunk) <= 1000 for chunk in chunks)
+    assert ''.join(chunks).replace('\n','').startswith("This is a sentence.")
 
 
 # Add more tests as needed
